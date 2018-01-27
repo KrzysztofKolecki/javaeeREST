@@ -1,34 +1,31 @@
 package com.example.restwsdemo.domain;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.xml.bind.annotation.XmlRootElement;
-
 @XmlRootElement
+@NamedQueries({ 
+	@NamedQuery(name = "shirt.all", query = "Select s from Shirt s"),
+	@NamedQuery(name = "shirt.delete.all", query = "Delete from Shirt "),
+	@NamedQuery(name = "shirt.findBySize", query = "Select s from Shirt s where s.size = :size"),
+	@NamedQuery(name = "shirtName.findByCustomer",
+	query = "Select c.name, c.surname, s.name, s.size, s.color from Shirt s JOIN s.customer c where c.surname = :surname")
+	})
 @Entity
 public class Shirt {
-	
-	public enum Size {
-        s, m, l, xl;
-    }
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	private Size size;
+	private String size;
 	private String color;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Customer customer;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Supplier> suppliers;
 	
 	
@@ -66,19 +63,11 @@ public class Shirt {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Size getSize() {
+	public String getSize() {
 		return size;
 	}
-	public void setSize(Size size) {
-		this.size = size;
-	}
 	public void setSize(String size) {
-		
-		if(size.equalsIgnoreCase("s")) this.size = Size.s;
-		if(size.equalsIgnoreCase("m")) this.size = Size.m;
-		if(size.equalsIgnoreCase("l")) this.size = Size.l;
-		if(size.equalsIgnoreCase("xl")) this.size = Size.xl;
-		
+		this.size = size;
 	}
 	public String getColor() {
 		return color;
@@ -88,7 +77,7 @@ public class Shirt {
 	}
 
 	
-	public Shirt(long id, String name, Size size, String color, Customer customer, Collection<Supplier> suppliers) {
+	public Shirt(long id, String name, String size, String color, Customer customer, Collection<Supplier> suppliers) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -98,6 +87,12 @@ public class Shirt {
 		this.suppliers = suppliers;
 	}
 
+	public Shirt(String name, String size, String color) {
+		super();
+		this.name = name;
+		this.size = size;
+		this.color = color;
+	}
 
 	public Shirt() {
 		super();

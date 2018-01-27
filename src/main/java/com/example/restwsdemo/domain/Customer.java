@@ -4,10 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@NamedQueries({ 
+	@NamedQuery(name = "customer.all", query = "Select c from Customer c"),
+	@NamedQuery(name = "customer.delete.all", query = "Delete from Customer"),
+	})
 @Entity
 public class Customer {
 
@@ -59,8 +65,5 @@ public class Customer {
 	public Customer() {
 		super();
 	}
-	
-	
-
 	
 }
