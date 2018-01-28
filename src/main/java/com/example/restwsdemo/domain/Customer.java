@@ -1,13 +1,20 @@
 package com.example.restwsdemo.domain;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
 @NamedQueries({ 
@@ -26,6 +33,9 @@ public class Customer {
 	@OneToOne
 	private Address address;
 	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="customer")
+	@JsonIgnore
+	private Collection<Shirt> shirts;
 	
 	public Address getAddress() {
 		return address;
@@ -51,8 +61,13 @@ public class Customer {
 	}
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}	
+	public Collection<Shirt> getShirts() {
+		return shirts;
 	}
-	
+	public void setShirts(Collection<Shirt> shirts) {
+		this.shirts = shirts;
+	}
 	
 	public Customer(long id, String name, String surname, Address address) {
 		super();
@@ -60,6 +75,12 @@ public class Customer {
 		this.name = name;
 		this.surname = surname;
 		this.address = address;
+	}
+	
+	public Customer(String name, String surname) {
+		super();
+		this.name = name;
+		this.surname = surname;
 	}
 	
 	public Customer() {

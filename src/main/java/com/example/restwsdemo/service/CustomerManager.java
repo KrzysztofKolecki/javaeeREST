@@ -14,12 +14,12 @@ public class CustomerManager {
 	EntityManager em;
 
 
-	public void addCustomer(Customer shirt) {
-		em.persist(shirt);
+	public void addCustomer(Customer customer) {
+		em.persist(customer);
 	}
 
-	public void deleteCustomer(Customer shirt){
-		em.remove(shirt);
+	public void deleteCustomer(Customer customer){
+		em.remove(customer);
 	}
 	
 	public Customer getCustomer(Long id) {		

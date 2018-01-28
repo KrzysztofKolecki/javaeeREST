@@ -9,7 +9,7 @@ import java.util.Collection;
 	@NamedQuery(name = "shirt.all", query = "Select s from Shirt s"),
 	@NamedQuery(name = "shirt.delete.all", query = "Delete from Shirt "),
 	@NamedQuery(name = "shirt.findBySize", query = "Select s from Shirt s where s.size = :size"),
-	@NamedQuery(name = "shirtName.findByCustomer",
+	@NamedQuery(name = "shirt.findByCustomer",
 	query = "Select c.name, c.surname, s.name, s.size, s.color from Shirt s JOIN s.customer c where c.surname = :surname")
 	})
 @Entity

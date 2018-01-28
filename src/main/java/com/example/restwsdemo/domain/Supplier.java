@@ -4,9 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@NamedQueries({ 
+	@NamedQuery(name = "supplier.all", query = "Select s from Supplier s"),
+	@NamedQuery(name = "supplier.delete.all", query = "Delete from Supplier"),
+	})
 @Entity
 public class Supplier {
 	
@@ -38,6 +44,12 @@ public class Supplier {
 	public Supplier(long id, String companyName, String phoneNumber) {
 		super();
 		this.id = id;
+		this.companyName = companyName;
+		this.phoneNumber = phoneNumber;
+	}
+	
+	public Supplier(String companyName, String phoneNumber) {
+		super();
 		this.companyName = companyName;
 		this.phoneNumber = phoneNumber;
 	}

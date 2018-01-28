@@ -17,6 +17,10 @@ public class ShirtManager {
 	public void addShirt(Shirt shirt) {
 		em.persist(shirt);
 	}
+	
+	public void updateShirt(Shirt shirt) {
+		em.merge(shirt);
+	}
 
 	public void deleteShirt(Shirt shirt){
 		em.remove(shirt);
