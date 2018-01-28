@@ -67,11 +67,13 @@ public class CustomerRESTService {
 		
 		for(Shirt rawObject : rawList){
 			
+			Long shirtId = rawObject.getId();
 			String name = rawObject.getName();
 			String color = rawObject.getColor();
 			String size = rawObject.getSize();
 			
 			builder.add(Json.createObjectBuilder()
+					.add("id", shirtId)
 					.add("name", name)
 					.add("color", color)
 					.add("size", size)
